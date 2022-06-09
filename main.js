@@ -10,18 +10,25 @@ class ExampleSlider {
    }
 
    hideAllSlide() {
-      this.slider.querySelectorAll('li').forEach(v => v.style.display = 'none');
+      this.slider.querySelectorAll('li').forEach(v => v.classList.add('hide'));
    }
 
    createStyle() {
       let style =
          `<style>
+                  .hide{
+                     display:none;
+                  }
+
                   .furtherLeft{
+
                      animation-name : hide;
                      animation-duration:${this.time}ms;
                   }
 
                   .toleft{
+                     display: block;
+                     z-index: 20;
                      animation-name : show;
                      animation-duration:${this.time}ms;
                   }
@@ -61,22 +68,28 @@ class ExampleSlider {
    }
 
    showSlide(elem) {
-      elem.style.display = 'block';
-      elem.style.zIndex = '10';
+      elem.classList.remove('hide');
       elem.classList.add('toleft');
-      setTimeout(() => {
-         elem.classList.remove('toleft');
-         elem.classList.add('furtherLeft');
-         elem.style.right = this.width + 'px';
-      }, this.time);
+      // setTimeout(() => {
+      //    elem.classList.add('furtherLeft');
+      //    elem.classList.remove('toleft');
+
+      //    elem.style.right = this.width + 'px';
+      // }, this.time);
    }
 
    slide() {
 
       let allSlides = this.slider.querySelectorAll('li');
-      console.dir(allSlides[0]);
       for (let i = 0; i < allSlides.length; i++) {
+
+         // allSlides[i].style.display = 'block';
+         // allSlides[i].style.zIndex = '10';
          this.showSlide(allSlides[i]);
+         if (allSlides[i].nextElementSibling == null) {
+            // this.showSlide(allSlides[i]);
+            console.dir(allSlides[i]);
+         }
 
       }
    }
@@ -88,8 +101,8 @@ class ExampleSlider {
       console.dir(this);
       this.hideAllSlide();
       this.createStyle();
-      this.showSlide(this.slider.querySelector('li'));
-      // this.slide();
+      // this.showSlide(this.slider.querySelector('li'));
+      this.slide();
    }
 }
 
